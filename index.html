@@ -1,12 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Document</title>
+    <title>Beranda - Sistem Crowdfunding Sosial</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Bantu<span>Sesama</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="login.html" class="btn-logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="search-section">
+        <div class="container">
+            <h2>Temukan Kampanye Donasi</h2>
+            <form class="search-form">
+                <input type="text" placeholder="Cari Judul Kampanye...">
+                <select>
+                    <option value="">Pilih Kategori</option>
+                    <option value="bencana">Bencana Alam</option>
+                    <option value="pendidikan">Pendidikan</option>
+                    <option value="kesehatan">Kesehatan</option>
+                </select>
+                <input type="text" placeholder="Lokasi">
+                <button type="button" class="btn-search">Cari</button>
+            </form>
+        </div>
+    </section>
+
+    <main class="container">
+        <h2 class="section-title">Kampanye Berlangsung</h2>
+        <div class="campaign-grid">
+            
+            <div class="campaign-card">
+                <img src="https://via.placeholder.com/300x180" alt="Poster Kampanye">
+                <div class="card-content">
+                    <span class="category">Pendidikan</span>
+                    <h3>Beasiswa Anak Pesisir</h3>
+                    <p class="organizer">Oleh: Yayasan Pendidikan Bangsa</p>
+                    <div class="fund-info">
+                        <p>Target: <strong>Rp 50.000.000</strong></p>
+                        <p>Terkumpul: <strong>Rp 12.500.000</strong></p>
+                    </div>
+                    <p class="deadline">Batas Waktu: 30 April 2026</p>
+                    
+                    <div class="action-links">
+                        <a href="detail.html" class="btn-detail">Lihat Detail</a>
+                        <a href="donasi.html" class="btn-donasi-quick">Donasi</a>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Sistem Crowdfunding Sosial. Mini Project Praktikum Web.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
