@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/donasi.css">
+    <title>Pengajuan Donasi</title>
+</head>
+<body>
+    <header>
+        <h1>Halaman Pengajuan Donasi</h1>
+    </header>
+    <section>
+        <h2>Ringkasan Kampanye</h2>
+        <p>Judul Kampanye: Bantuan Korban Bencana Alam</p>
+        <p>Penyelenggara: Relawan Peduli Kasih</p>
+        <p>Target Dana: Rp 50.000.000</p>
+        <p>Dana Terkumpul: Rp 15.000.000</p>
+        <p>Kampanye ini bertujuan membantu korban bencana alam yang terdampak.</p>
+    </section>
+    <section>
+        <h2>Formulir Donasi</h2>
+        <form>
+            <label for="nama">Nama Lengkap:</label>
+            <input type="text" id="nama" name="nama"><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email"><br>
+            <label for="nominal">Nominal Donasi:</label>
+            <input type="number" id="nominal" name="nominal"><br>
+            <label for="pembayaran">Metode Pembayaran:</label>
+            <select id="pembayaran">
+                <option>Transfer Bank</option>
+                <option>E-Wallet</option>
+            </select><br>
+            <label for="pesan">Pesan Dukungan:</label><br>
+            <textarea id="pesan" name="pesan"></textarea><br>
+            <label for="bukti">Bukti Transfer:</label>
+            <input type="file" id="bukti" name="bukti"><br>
+            <button type="submit">Kirim</button>
+        </form>
+    </section>
+    <footer></footer>
+</body>
+</html>
