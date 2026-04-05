@@ -1,44 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/donasi.css">
-    <title>Pengajuan Donasi</title>
+    <title>Donasi - BantuSesama</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+    <!-- HEADER -->
     <header>
-        <h1>Halaman Pengajuan Donasi</h1>
+        <div class="container">
+            <div class="logo">
+                <h1>Bantu<span>Sesama</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="login.html">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <section>
-        <h2>Ringkasan Kampanye</h2>
-        <p>Judul Kampanye: Bantuan Korban Bencana Alam</p>
-        <p>Penyelenggara: Relawan Peduli Kasih</p>
-        <p>Target Dana: Rp 50.000.000</p>
-        <p>Dana Terkumpul: Rp 15.000.000</p>
-        <p>Kampanye ini bertujuan membantu korban bencana alam yang terdampak.</p>
-    </section>
-    <section>
-        <h2>Formulir Donasi</h2>
-        <form>
-            <label for="nama">Nama Lengkap:</label>
-            <input type="text" id="nama" name="nama"><br>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email"><br>
-            <label for="nominal">Nominal Donasi:</label>
-            <input type="number" id="nominal" name="nominal"><br>
-            <label for="pembayaran">Metode Pembayaran:</label>
-            <select id="pembayaran">
-                <option>Transfer Bank</option>
-                <option>E-Wallet</option>
-            </select><br>
-            <label for="pesan">Pesan Dukungan:</label><br>
-            <textarea id="pesan" name="pesan"></textarea><br>
-            <label for="bukti">Bukti Transfer:</label>
-            <input type="file" id="bukti" name="bukti"><br>
-            <button type="submit">Kirim</button>
-        </form>
-    </section>
-    <footer></footer>
+
+    <!-- MAIN -->
+    <main class="container">
+
+        <!-- RINGKASAN -->
+        <section class="campaign-summary">
+            <h2>Ringkasan Kampanye</h2>
+            <p><strong>Judul:</strong> Bantuan Korban Bencana Alam</p>
+            <p><strong>Penyelenggara:</strong> Relawan Peduli Kasih</p>
+            <p><strong>Target Dana:</strong> Rp 50.000.000</p>
+            <p><strong>Terkumpul:</strong> Rp 15.000.000</p>
+            <p>Kampanye ini bertujuan membantu korban bencana alam yang terdampak.</p>
+        </section>
+
+        <!-- FORM DONASI -->
+        <section class="donation-form">
+            <h2>Formulir Donasi</h2>
+
+            <form>
+                
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nominal">Nominal Donasi</label>
+                    <input type="number" id="nominal" name="nominal" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pembayaran">Metode Pembayaran</label>
+                    <select id="pembayaran" name="pembayaran" required>
+                        <option value="">-- Pilih Metode --</option>
+                        <option value="bank">Transfer Bank</option>
+                        <option value="ewallet">E-Wallet</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="pesan">Pesan Dukungan</label>
+                    <textarea id="pesan" name="pesan" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="bukti">Bukti Transfer</label>
+                    <input type="file" id="bukti" name="bukti">
+                </div>
+
+                <button type="submit" class="btn-submit">Kirim Donasi</button>
+
+            </form>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Sistem Crowdfunding Sosial</p>
+        </div>
+    </footer>
+
 </body>
 </html>
