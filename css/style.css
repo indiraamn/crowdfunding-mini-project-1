@@ -343,7 +343,7 @@ input, select, textarea {
 }
 
 
-/* ===== AUTH (LOGIN & REGISTER) ===== */
+/* ===== login dan daftar ===== */
 .auth-page {
     background-color: #e3f2fd;
 }
@@ -411,11 +411,26 @@ input, select, textarea {
     background: #1976D2;
 }
 
+/*action suksesssss*/
+#sukses {
+    display: none;
+    text-align: center;
+    color: green;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* muncul "sukses" setelah tombol diklik) */
+#sukses:target {
+    display: block;
+}
+
 /* ===== FOOTER ===== */
 footer {
     background: #1976D2;
     color: white;
     text-align: center;
     padding: 20px 0;
-    margin-top: 40px;
+    margin-top: 50px;
 }
+
