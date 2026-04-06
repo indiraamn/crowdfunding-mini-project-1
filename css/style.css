@@ -42,7 +42,7 @@ nav ul {
     list-style: none;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 20px; /*this is for jarak antar item di gridnya*/
     margin: 0px;
     padding: 0px;
 }
