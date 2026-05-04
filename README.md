@@ -1,107 +1,65 @@
-# Crowdfunding Social Website
+# BantuSesama — Mini Project #2 (Website Dinamis)
 
-Mini project website **Crowdfunding Sosial** menggunakan **HTML dan CSS**.
-
----
-
-# Fitur Website
-
-## 1. Halaman Utama
-
-Halaman utama menampilkan semua kampanye yang tersedia.
-
-### Area Pencarian / Filter *(belum perlu berfungsi)*
-
-Pengguna dapat memfilter kampanye berdasarkan:
-
-* Judul Kampanye
-* Kategori
-* Lokasi
-* Rentang Target Dana
-
-### Informasi Kampanye
-
-Setiap kampanye menampilkan informasi:
-
-* Poster Kampanye
-* Judul Kampanye
-* Nama Penyelenggara
-* Target Dana
-* Dana Terkumpul
-* Deadline
-
-Setiap kampanye memiliki **hyperlink menuju halaman detail kampanye**.
+Lanjutan dari Mini Project #1. Website statis diubah menjadi dinamis menggunakan **PHP** dan **MySQL**.
 
 ---
 
-## 2. Halaman Detail Kampanye
+## Anggota Kelompok
 
-Halaman ini menampilkan informasi lengkap tentang kampanye.
-
-Fitur pada halaman detail:
-
-* Informasi kampanye ditampilkan secara **rapi dan terstruktur**
-* Terdapat **tombol / hyperlink untuk kembali ke halaman utama**
-* Layout halaman menggunakan **2 atau 3 kolom**
-* Terdapat tombol **"Donasi Sekarang"** yang menuju ke halaman donasi
+| NIM | Nama |
+|---|---|
+| 71241126 | Valentino Kevin Yulianto |
+| 71241133 | Irene Fernanda Putri |
+| 71241154 | Indira Mai Narwastu |
 
 ---
 
-## 3. Halaman Pengajuan Donasi
+## Teknologi
 
-Halaman dimana pengguna dapat melakukan pengajuan donasi.
-
-### Ringkasan Kampanye
-
-Sebelum mengisi formulir, pengguna dapat melihat **ringkasan informasi kampanye**.
-
-### Formulir Donasi
-
-Form donasi berisi:
-
-* Nama Lengkap
-* Email
-* Nominal Donasi
-* Metode Pembayaran
-* Pesan Dukungan *(opsional)*
-* Upload Bukti Transfer *(PDF / JPG / PNG)*
+- PHP, MySQL, HTML, CSS
 
 ---
 
-## 4. Halaman Login
+## Fitur yang Dibutuhkan
 
-Website menyediakan halaman login *(belum perlu berfungsi)*.
+### 1. Halaman Utama
+- Daftar kampanye diambil dari database (bukan statis)
+- Hanya tampilkan kampanye yang belum melewati batas waktu
+- Fungsi search berdasarkan judul, kategori, dan lokasi
+- Diurutkan berdasarkan deadline terdekat dan dana terkecil
+- Pagination
 
-Form login berisi:
+### 2. Halaman Detail Kampanye
+- Data diambil dari database sesuai kampanye yang diklik
+- Terdapat progress bar dana terkumpul
+- Tombol "Donasi Sekarang"
 
-* Username / Email
-* Password
+### 3. Halaman Donasi
+- Wajib login dulu, jika belum login diarahkan ke halaman login
+- Menampilkan ringkasan kampanye dan data diri donatur dari database
+- Input: nominal donasi, metode pembayaran, pesan dukungan (opsional), bukti transfer (JPG/PNG/PDF)
+- Validasi nominal minimal Rp10.000
+- Donasi tersimpan dengan status **PENDING**
 
-Terdapat dua jenis pengguna dalam sistem:
+### 4. Login & Logout
+- Form login dengan email dan password
+- Validasi dari database, simpan ke session
+- Tombol login berubah jadi logout setelah masuk
+- Akses tanpa login di-redirect ke halaman login
 
-* **Donatur**
-* **Pengelola Kampanye**
+### 5. Pengelolaan Kampanye (Penyelenggara)
+- CRUD kampanye
+- Kampanye dengan dana terkumpul ≥ Rp10.000 tidak bisa dihapus
+- Lihat daftar donatur per kampanye
+- Verifikasi donasi: ubah status pending → verified / rejected
+  - Verified → dana terkumpul bertambah
+  - Rejected → dana tidak berubah
+
+### 6. Riwayat Donasi (Donatur)
+- Donatur bisa melihat riwayat donasi yang pernah dilakukan
 
 ---
 
-# Teknologi yang Digunakan
-
-* HTML
-* CSS
-
----
-
-# Struktur Halaman
-
-* `index.html` → Halaman Utama
-* `detail.html` → Halaman Detail Kampanye
-* `donasi.html` → Halaman Pengajuan Donasi
-* `login.html` → Halaman Login
-
----
-
-# Anggota Kelompok
-
-1. 71241126 - Valentino Kevin Yulianto
-2. 71241133 - Irene Fernanda Putri
-3. 71241154 - Indira Mai Narwastu
+## Bonus (Nilai Tambah)
+- Ringkasan total donasi per status (verified / pending / rejected)
+- Indikator warna status donasi (hijau / kuning / merah)
