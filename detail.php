@@ -1,3 +1,4 @@
+<?php require 'koneksi.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -14,8 +15,8 @@
             <h1 class="logo">Bantu<span>Sesama</span></h1>
             <nav>
                 <ul>
-                    <li><a href="index.html">Beranda</a></li>
-                    <li><a href="login.html">Login</a></li>
+                    <li><a href="index.php">Beranda</a></li>
+                    <li><a href="login.php">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -73,8 +74,8 @@
 
             <!-- !-- BUTTON -->
             <div class="donation-action">
-                <a href="donasi.html" class="btn-donate">Donasi Sekarang</a>
-                <a href="index.html" class="btn-back">← Kembali ke Beranda</a>
+                <a href="donasi.php" class="btn-donate">Donasi Sekarang</a>
+                <a href="index.php" class="btn-back">← Kembali ke Beranda</a>
             </div>
 
        
