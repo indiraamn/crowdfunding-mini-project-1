@@ -14,12 +14,6 @@ Lanjutan dari Mini Project #1. Website statis diubah menjadi dinamis menggunakan
 
 ---
 
-## Teknologi
-
-- PHP, MySQL, HTML, CSS
-
----
-
 ## Fitur yang Dibutuhkan
 
 ### 1. Halaman Utama
