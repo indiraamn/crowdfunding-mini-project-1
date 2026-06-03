@@ -32,7 +32,7 @@ $sql = "
     SELECT k.*, p.nama_penyelenggara
     FROM kampanye k
     JOIN penyelenggara p ON k.penyelenggara_id = p.id
-    WHERE k.status = 'aktif'
+    WHERE k.status = 'aktif' AND k.batas_waktu >= '$today'
 ";
 
 if ($keyword !== '') {
