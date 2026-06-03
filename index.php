@@ -35,7 +35,11 @@ $sql = "
     SELECT k.*, p.nama_penyelenggara
     FROM kampanye k
     JOIN penyelenggara p ON k.penyelenggara_id = p.id
+<<<<<<< Updated upstream
     WHERE k.batas_waktu >= '$today'
+=======
+    WHERE k.status = 'aktif' AND k.batas_waktu >= '$today'
+>>>>>>> Stashed changes
 ";
 
 if ($keyword !== '') {
