@@ -1,4 +1,43 @@
-<?php require 'koneksi.php'; ?>
+<?php
+session_start();
+require 'koneksi.php';
+
+$error = "";
+$success = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nama = trim($_POST["nama"]);
+    $email = trim($_POST["email"]);
+    $no_telepon = trim($_POST["no_telepon"]);
+    $password = $_POST["password"];
+
+    if (strlen($password) < 8) {
+        $error = "Password minimal 8 karakter.";
+    } else {
+        // Cek email sudah dipakai atau belum
+        $cek = $conn->prepare("SELECT id FROM donatur WHERE email = ?");
+        $cek->bind_param("s", $email);
+        $cek->execute();
+        $result = $cek->get_result();
+
+        if ($result->num_rows > 0) {
+            $error = "Email sudah terdaftar.";
+        } else {
+            // Password harus di-hash supaya cocok dengan password_verify di login.php
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            $stmt = $conn->prepare("INSERT INTO donatur (nama, email, no_telepon, password, created_at) VALUES (?, ?, ?, ?, NOW())");
+            $stmt->bind_param("ssss", $nama, $email, $no_telepon, $password_hash);
+
+            if ($stmt->execute()) {
+                $success = "Pendaftaran berhasil. Silakan login.";
+            } else {
+                $error = "Pendaftaran gagal.";
+            }
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -27,29 +66,36 @@
         <section class="auth-box">
             <h2>Daftar Akun</h2>
             <p>Lengkapi data untuk membuat akun baru</p>
- 
-            <form>
+            <?php if ($error != ""): ?>
+                <p style="color:red; text-align:center;"><?php echo $error; ?></p>
+            <?php endif; ?>
+
+            <?php if ($success != ""): ?>
+                <p style="color:green; text-align:center;"><?php echo $success; ?></p>
+            <?php endif; ?>
+            
+            <form method="POST" action="">
                 <div class="form-group">
                     <label>Nama Lengkap</label>
-                    <input type="text" placeholder="Nama Lengkap" required>
+                    <input type="text" name="nama" placeholder="Nama Lengkap" required>
                 </div>
  
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" placeholder="email@contoh.com" required>
+                    <input type="email" name="email" placeholder="email@contoh.com" required>
                 </div>
  
                 <div class="form-group">
                     <label>No. Telepon</label>
-                    <input type="tel" placeholder="08xxxxxxxxxx" required>
+                    <input type="tel" name="no_telepon" placeholder="08xxxxxxxxxx" required>
                 </div>
  
                 <div class="form-group">
                     <label>Password Baru</label>
-                    <input type="password" placeholder="Minimal 8 karakter" required>
+                    <input type="password" name="password" placeholder="Minimal 8 karakter" required>
                 </div>
  
-                <a href="login.php" class="btn-submit">Selesaikan Pendaftaran</a>
+                <button type="submit" class="btn-submit">Selesaikan Pendaftaran</button>
             </form>
  
             <p style="text-align:center; margin-top:15px; font-size:0.9rem;">
