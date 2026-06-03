@@ -1,4 +1,36 @@
-<?php require 'koneksi.php'; ?>
+<?php
+session_start();
+require 'koneksi.php';
+
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    $stmt = $conn->prepare("SELECT id, nama, email, password FROM donatur WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+
+        if (password_verify($password, $user["password"])) {
+            $_SESSION["donatur_id"] = $user["id"];
+            $_SESSION["donatur_nama"] = $user["nama"];
+            $_SESSION["donatur_email"] = $user["email"];
+
+            header("Location: index.php");
+            exit;
+        } else {
+            $error = "Password salah.";
+        }
+    } else {
+        $error = "Email tidak ditemukan.";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -27,16 +59,19 @@
         <section class="auth-box">
             <h2>Login</h2>
             <p>Masukkan akun Anda untuk masuk</p>
+            <?php if ($error != ""): ?>
+                <p style="color:red; text-align:center;"><?php echo $error; ?></p>
+            <?php endif; ?>
  
-            <form>
+            <form method="POST" action="">
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" placeholder="email@contoh.com" required>
+                    <input type="email" name="email" placeholder="email@contoh.com" required>
                 </div>
  
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" placeholder="Masukkan password" required>
+                    <input type="password" name="password" placeholder="Masukkan password" required>
                 </div>
  
                 <div class="form-group">
@@ -47,7 +82,7 @@
                     </select>
                 </div>
  
-                <a href="index.php" class="btn-submit">Masuk</a>
+                <button type="submit" class="btn-submit">Masuk</button>
             </form>
  
             <p style="text-align:center; margin-top:15px; font-size:0.9rem;">
