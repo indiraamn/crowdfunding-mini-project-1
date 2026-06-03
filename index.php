@@ -15,8 +15,8 @@
             <h1 class="logo">Bantu<span>Sesama</span></h1>
             <nav>
                 <ul>
-                    <li><a href="index.html">Beranda</a></li>
-                    <li><a href="login.html">Login</a></li>
+                    <li><a href="index.php">Beranda</a></li>
+                    <li><a href="login.php">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -66,7 +66,7 @@
                     <p>Terkumpul: <strong>Rp 12.500.000</strong></p>
                     <p class="deadline">Batas Waktu: 30 April 2026</p>
 
-                    <a href="detail.html" class="btn-detail">Lihat Detail</a>
+                    <a href="detail.php" class="btn-detail">Lihat Detail</a>
                 </div>
             </div>
 
@@ -84,7 +84,7 @@
                     <p>Terkumpul: <strong>Rp 45.000.000</strong></p>
                     <p class="deadline">Batas Waktu: 10 Mei 2026</p>
 
-                    <a href="detail.html" class="btn-detail">Lihat Detail</a>
+                    <a href="detail.php" class="btn-detail">Lihat Detail</a>
                 </div>
             </div>
 
@@ -102,7 +102,7 @@
                     <p>Terkumpul: <strong>Rp 10.000.000</strong></p>
                     <p class="deadline">Batas Waktu: 20 Mei 2026</p>
 
-                    <a href="detail.html" class="btn-detail">Lihat Detail</a>
+                    <a href="detail.php" class="btn-detail">Lihat Detail</a>
                 </div>
             </div>
 
@@ -120,7 +120,7 @@
                     <p>Terkumpul: <strong>Rp 10.000.000</strong></p>
                     <p class="deadline">Batas Waktu: 20 Mei 2026</p>
 
-                    <a href="detail.html" class="btn-detail">Lihat Detail</a>
+                    <a href="detail.php" class="btn-detail">Lihat Detail</a>
                 </div>
             </div>
 

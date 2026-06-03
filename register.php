@@ -15,8 +15,8 @@
             <h1 class="logo">Bantu<span>Sesama</span></h1>
             <nav>
                 <ul>
-                    <li><a href="index.html">Beranda</a></li>
-                    <li><a href="login.html">Login</a></li>
+                    <li><a href="index.php">Beranda</a></li>
+                    <li><a href="login.php">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -49,11 +49,11 @@
                     <input type="password" placeholder="Minimal 8 karakter" required>
                 </div>
  
-                <a href="login.html" class="btn-submit">Selesaikan Pendaftaran</a>
+                <a href="login.php" class="btn-submit">Selesaikan Pendaftaran</a>
             </form>
  
             <p style="text-align:center; margin-top:15px; font-size:0.9rem;">
-                Sudah punya akun? <a href="login.html" style="color:#1976D2; font-weight:bold;">Login di sini</a>
+                Sudah punya akun? <a href="login.php" style="color:#1976D2; font-weight:bold;">Login di sini</a>
             </p>
         </section>
     </main>

@@ -17,8 +17,8 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html">Beranda</a></li>
-                    <li><a href="login.html">Logout</a></li>
+                    <li><a href="index.php">Beranda</a></li>
+                    <li><a href="login.php">Logout</a></li>
                 </ul>
             </nav>
         </div>

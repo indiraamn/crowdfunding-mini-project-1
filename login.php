@@ -15,8 +15,8 @@
             <h1 class="logo">Bantu<span>Sesama</span></h1>
             <nav>
                 <ul>
-                    <li><a href="index.html">Beranda</a></li>
-                    <li><a href="login.html">Login</a></li>
+                    <li><a href="index.php">Beranda</a></li>
+                    <li><a href="login.php">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -47,11 +47,11 @@
                     </select>
                 </div>
  
-                <a href="index.html" class="btn-submit">Masuk</a>
+                <a href="index.php" class="btn-submit">Masuk</a>
             </form>
  
             <p style="text-align:center; margin-top:15px; font-size:0.9rem;">
-                Belum punya akun? <a href="register.html" style="color:#1976D2; font-weight:bold;">Daftar di sini</a>
+                Belum punya akun? <a href="register.php" style="color:#1976D2; font-weight:bold;">Daftar di sini</a>
             </p>
         </section>
     </main>
