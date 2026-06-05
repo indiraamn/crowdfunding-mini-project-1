@@ -1,4 +1,7 @@
-<?php require 'koneksi.php'; ?>
+<?php 
+session_start();
+require 'koneksi.php'; 
+?>
 <?php
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
 
@@ -51,7 +54,14 @@ function formatTanggal($tanggal) {
             <nav>
                 <ul>
                     <li><a href="index.php">Beranda</a></li>
+                    <?php if (isset($_SESSION["donatur_id"])): ?>
+                       <li>
+                        <span>Halo, <?php echo htmlspecialchars($_SESSION["donatur_nama"]); ?></span>
+                       </li> 
+                    <li><a href="logout.php">Logout</a></li>
+                <?php else: ?>
                     <li><a href="login.php">Login</a></li>
+                <?php endif; ?>
                 </ul>
             </nav>
         </div>
