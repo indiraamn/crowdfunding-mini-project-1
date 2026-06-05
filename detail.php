@@ -70,6 +70,7 @@ $gambar_src = file_exists('images/' . $kampanye['gambar'])
                 <ul>
                     <li><a href="index.php">Beranda</a></li>
                     <?php if (isset($_SESSION["donatur_id"])): ?>
+                        <li><a href="riwayat_donasi.php">Riwayat Donasi</a></li>
                        <li>
                         <span>Halo, <?php echo htmlspecialchars($_SESSION["donatur_nama"]); ?></span>
                        </li> 

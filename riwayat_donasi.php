@@ -48,9 +48,9 @@ while ($row = $result->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Donasi - BantuSesama</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2">
 </head>
-<body>
+<body class="history-page">
 
 <header>
     <div class="container">
@@ -72,7 +72,8 @@ while ($row = $result->fetch_assoc()) {
     <h2 class="section-title">Riwayat Donasi Saya</h2>
 
     <?php if (count($riwayat) > 0): ?>
-        <table border="1" cellpadding="10" cellspacing="0" width="100%">
+        <div class="table-wrapper">
+            <table class="history-table">
             <thead>
                 <tr>
                     <th>No</th>
@@ -98,19 +99,24 @@ while ($row = $result->fetch_assoc()) {
                         </td>
                         <td>
                             <?php if (!empty($r['bukti_transfer'])): ?>
-                                <a href="<?= htmlspecialchars($r['bukti_transfer']) ?>" target="_blank">Lihat Bukti</a>
+                                <a href="<?= htmlspecialchars($r['bukti_transfer']) ?>" target="_blank" class="btn-proof"> 
+                                    Lihat Bukti
+                                </a>
                             <?php else: ?>
                                 -
                             <?php endif; ?>
                         </td>
                         <td>
+                        <span class="status-badge status-<?= strtolower(htmlspecialchars($r['status'])) ?>">
                             <?= strtoupper(htmlspecialchars($r['status'])) ?>
+                        </span>
                         </td>
                         <td><?= formatTanggal($r['created_at']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-        </table>
+            </table>
+        </div>
     <?php else: ?>
         <p style="text-align:center; padding:40px 0; color:#888;">
             Kamu belum pernah melakukan donasi.
