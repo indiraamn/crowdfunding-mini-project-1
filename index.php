@@ -1,4 +1,7 @@
-<?php require 'koneksi.php'; ?>
+<?php
+session_start();
+require 'koneksi.php';
+?>
 <?php
 function formatRupiah($angka) {
     return 'Rp ' . number_format($angka, 0, ',', '.');
@@ -70,11 +73,19 @@ while ($row = mysqli_fetch_assoc($result)) {
         <div class="container">
             <h1 class="logo">Bantu<span>Sesama</span></h1>
             <nav>
-                <ul>
-                    <li><a href="index.php">Beranda</a></li>
-                    <li><a href="login.php">Login</a></li>
-                </ul>
-            </nav>
+    <ul>
+        <li><a href="index.php">Beranda</a></li>
+
+        <?php if (isset($_SESSION["donatur_id"])): ?>
+            <li>
+                <span>Halo, <?php echo htmlspecialchars($_SESSION["donatur_nama"]); ?></span>
+            </li>
+            <li><a href="logout.php">Logout</a></li>
+        <?php else: ?>
+            <li><a href="login.php">Login</a></li>
+        <?php endif; ?>
+    </ul>
+</nav>
         </div>
     </header>
 
