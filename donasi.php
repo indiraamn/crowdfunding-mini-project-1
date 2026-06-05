@@ -50,6 +50,9 @@ if (!$donatur) {
 }
 $error = "";
 $success = "";
+if (isset($_GET["success"]) && $_GET["success"] == 1) {
+    $success = "Donasi berhasil dikirim. Status donasi Anda masih PENDING dan menunggu verifikasi.";
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nominal = isset($_POST["nominal"]) ? (float)$_POST["nominal"] : 0;
@@ -106,7 +109,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 );
 
                 if ($stmt_insert->execute()) {
-                    $success = "Donasi berhasil dikirim. Status donasi Anda masih PENDING dan menunggu verifikasi.";
+                    header("Location: donasi.php?id=" . $id . "&success=1");
+                    exit;
                 } else {
                     $error = "Gagal menyimpan donasi ke database.";
                 }
