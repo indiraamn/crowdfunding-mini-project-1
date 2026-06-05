@@ -19,6 +19,16 @@ if (!$kampanye) {
     exit;
 }
 
+// Hitung donatur verified dari database
+$query_donatur = "
+    SELECT COUNT(*) as total_donatur
+    FROM donasi
+    WHERE kampanye_id = $id AND status = 'verified'
+";
+$result_donatur = mysqli_query($conn, $query_donatur);
+$row_donatur    = mysqli_fetch_assoc($result_donatur);
+$total_donatur  = (int)$row_donatur['total_donatur'];
+
 $target    = (float)$kampanye['target_dana'];
 $terkumpul = (float)$kampanye['dana_terkumpul'];
 $persen    = ($target > 0) ? min(100, round(($terkumpul / $target) * 100)) : 0;
@@ -36,6 +46,11 @@ function formatTanggal($tanggal) {
     list($y, $m, $d) = explode('-', $tanggal);
     return "$d {$bulan[$m]} $y";
 }
+
+// Cek file gambar, fallback kalau tidak ada
+$gambar_src = file_exists('images/' . $kampanye['gambar'])
+    ? 'images/' . $kampanye['gambar']
+    : 'images/Gempa Manado.jpeg';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -73,9 +88,8 @@ function formatTanggal($tanggal) {
         <!-- KOLOM KIRI -->
         <section class="detail-left">
             <img
-                src="images/<?= htmlspecialchars($kampanye['gambar']) ?>"
+                src="<?= htmlspecialchars($gambar_src) ?>"
                 alt="<?= htmlspecialchars($kampanye['judul']) ?>"
-                onerror="this.src='images/Gempa Manado.jpeg'"
             >
 
             <h2><?= htmlspecialchars($kampanye['judul']) ?></h2>
@@ -104,6 +118,7 @@ function formatTanggal($tanggal) {
                     </div>
 
                     <p class="percent"><?= $persen ?>% tercapai</p>
+                    <p><strong><?= $total_donatur ?></strong> donatur telah berpartisipasi</p>
                     <p class="deadline">Batas Waktu: <?= formatTanggal($kampanye['batas_waktu']) ?></p>
                 </div>
 
