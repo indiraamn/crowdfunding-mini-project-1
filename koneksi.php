@@ -3,7 +3,7 @@ $host   = "127.0.0.1";
 $dbname = "crowdfunding";
 $user   = "root";
 $pass   = "";
-$port   = 3306;
+$port   = 3307;
 
 $conn = new mysqli($host, $user, $pass, $dbname, $port);
 

@@ -1,4 +1,54 @@
-<?php require 'koneksi.php'; ?>
+<?php
+session_start();
+require 'koneksi.php';
+
+if (!isset($_SESSION["donatur_id"])) {
+    header("Location: login.php");
+    exit;
+}
+
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+if ($id <= 0) {
+    header("Location: index.php");
+    exit;
+}
+
+function formatRupiah($angka) {
+    return 'Rp ' . number_format($angka, 0, ',', '.');
+}
+
+// Ambil data kampanye
+$query_kampanye = "
+    SELECT k.*, p.nama_penyelenggara
+    FROM kampanye k
+    JOIN penyelenggara p ON k.penyelenggara_id = p.id
+    WHERE k.id = $id
+";
+$result_kampanye = mysqli_query($conn, $query_kampanye);
+$kampanye = mysqli_fetch_assoc($result_kampanye);
+
+if (!$kampanye) {
+    header("Location: index.php");
+    exit;
+}
+
+// Ambil data donatur dari session login
+$donatur_id = $_SESSION["donatur_id"];
+
+$stmt = $conn->prepare("SELECT id, nama, email FROM donatur WHERE id = ?");
+$stmt->bind_param("i", $donatur_id);
+$stmt->execute();
+$result_donatur = $stmt->get_result();
+$donatur = $result_donatur->fetch_assoc();
+
+if (!$donatur) {
+    session_unset();
+    session_destroy();
+    header("Location: login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -16,11 +66,19 @@
                 <h1>Bantu<span>Sesama</span></h1>
             </div>
             <nav>
-                <ul>
-                    <li><a href="index.php">Beranda</a></li>
-                    <li><a href="login.php">Logout</a></li>
-                </ul>
-            </nav>
+    <ul>
+        <li><a href="index.php">Beranda</a></li>
+
+        <?php if (isset($_SESSION["donatur_id"])): ?>
+            <li>
+                <span>Halo, <?php echo htmlspecialchars($_SESSION["donatur_nama"]); ?></span>
+            </li>
+            <li><a href="logout.php">Logout</a></li>
+        <?php else: ?>
+            <li><a href="login.php">Login</a></li>
+        <?php endif; ?>
+    </ul>
+</nav>
         </div>
     </header>
 
@@ -30,11 +88,11 @@
         <!-- RINGKASAN -->
         <section class="campaign-summary">
             <h2>Ringkasan Kampanye</h2>
-            <p><strong>Judul:</strong> Bantuan Korban Bencana Alam</p>
-            <p><strong>Penyelenggara:</strong> Relawan Peduli Kasih</p>
-            <p><strong>Target Dana:</strong> Rp 50.000.000</p>
-            <p><strong>Terkumpul:</strong> Rp 15.000.000</p>
-            <p>Kampanye ini bertujuan membantu korban bencana alam yang terdampak.</p>
+            <p><strong>Judul:</strong><?= htmlspecialchars($kampanye['judul']) ?></p>
+            <p><strong>Penyelenggara:</strong><?= htmlspecialchars($kampanye['nama_penyelenggara']) ?></p>
+            <p><strong>Target Dana:</strong> <?= formatRupiah($kampanye['target_dana']) ?></p>
+            <p><strong>Terkumpul:</strong> <?= formatRupiah($kampanye['dana_terkumpul']) ?></p>
+            <p><?= nl2br(htmlspecialchars($kampanye['deskripsi'])) ?></p>
         </section>
 
         <!-- FORM DONASI -->
@@ -46,12 +104,12 @@
                 
                 <div class="form-group">
                     <label for="nama">Nama Lengkap</label>
-                    <input type="text" id="nama" name="nama" required>
+                    <input type="text" id="nama" name="nama" value="<?= htmlspecialchars($donatur['nama'])?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($donatur['email'])?>" readonly>
                 </div>
 
                 <div class="form-group">
