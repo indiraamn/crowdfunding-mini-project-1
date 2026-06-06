@@ -58,7 +58,7 @@ while ($row = $result->fetch_assoc()) {
         <nav>
             <ul>
                 <li><a href="index.php">Beranda</a></li>
-                <li><a href="riwayat_donasi.php">Riwayat Donasi</a></li>
+                <li><a href="riwayat_donasi.php" class="active">Riwayat Donasi</a></li>
                 <li>
                     <span>Halo, <?php echo htmlspecialchars($_SESSION["donatur_nama"]); ?></span>
                 </li>

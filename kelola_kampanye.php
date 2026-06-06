@@ -64,21 +64,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             INSERT INTO kampanye (penyelenggara_id, judul, kategori, lokasi, deskripsi, target_dana, dana_terkumpul, batas_waktu, rekening_info, gambar, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?, NOW(), NOW())
         ");
-        $stmt->bind_param("issssdss s", $penyelenggara_id, $judul, $kategori, $lokasi, $deskripsi, $target_dana, $batas_waktu, $rekening, $gambar_nama);
-        // fix bind: 9 params
-        $stmt->close();
-
-        $stmt2 = $conn->prepare("
-            INSERT INTO kampanye (penyelenggara_id, judul, kategori, lokasi, deskripsi, target_dana, dana_terkumpul, batas_waktu, rekening_info, gambar, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?, NOW(), NOW())
-        ");
-        $stmt2->bind_param("issssdsss", $penyelenggara_id, $judul, $kategori, $lokasi, $deskripsi, $target_dana, $batas_waktu, $rekening, $gambar_nama);
-        if ($stmt2->execute()) {
+        $stmt->bind_param("issssdsss", $penyelenggara_id, $judul, $kategori, $lokasi, $deskripsi, $target_dana, $batas_waktu, $rekening, $gambar_nama);
+        if ($stmt->execute()) {
             $pesan_sukses = "Kampanye berhasil ditambahkan.";
         } else {
             $pesan_error = "Gagal menyimpan kampanye ke database.";
         }
-        $stmt2->close();
+        $stmt->close();
     } elseif ($pesan_error === '') {
         $pesan_error = "Semua kolom wajib diisi.";
     }
@@ -386,7 +378,7 @@ $tab = $_GET['tab'] ?? 'kampanye';
         <nav>
             <ul>
                 <li><a href="index.php">Beranda</a></li>
-                <li><a href="kelola_kampanye.php" style="font-weight:bold">Dashboard</a></li>
+                <li><a href="kelola_kampanye.php" class="active">Dashboard</a></li>
                 <li><span>Halo, <?= htmlspecialchars($penyelenggara_nama) ?></span></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
@@ -434,7 +426,7 @@ $tab = $_GET['tab'] ?? 'kampanye';
                     <div class="form-group-k">
                         <label>Kategori *</label>
                         <select name="kategori" required>
-                            <?php foreach (['Bencana','Pendidikan','Kesehatan','Lingkungan','Fasilitas Umum','Lainnya'] as $kat): ?>
+                            <?php foreach (['Bencana','Pendidikan','Kesehatan','Lingkungan','Fasilitas Umum','Pemberdayaan','Ekonomi','Lainnya'] as $kat): ?>
                                 <option value="<?= $kat ?>" <?= $edit_data['kategori']===$kat?'selected':'' ?>><?= $kat ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -545,7 +537,7 @@ $tab = $_GET['tab'] ?? 'kampanye';
                         <label>Kategori *</label>
                         <select name="kategori" required>
                             <option value="">-- Pilih Kategori --</option>
-                            <?php foreach (['Bencana','Pendidikan','Kesehatan','Lingkungan','Fasilitas Umum','Lainnya'] as $kat): ?>
+                            <?php foreach (['Bencana','Pendidikan','Kesehatan','Lingkungan','Fasilitas Umum','Pemberdayaan','Ekonomi','Lainnya'] as $kat): ?>
                                 <option value="<?= $kat ?>"><?= $kat ?></option>
                             <?php endforeach; ?>
                         </select>

@@ -61,10 +61,7 @@ nav a {
 }
 
 nav a.active {
-    border: 2px solid #FFD600;
-    border-radius: 6px;
-    padding: 4px 10px;
-    color: #FFD600;
+    color: #90CAF9;
 }
 
 /* ===== SEARCH ===== */
@@ -134,8 +131,6 @@ nav a.active {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     overflow: hidden;
     transition: 0.2s;
-    display: flex;
-    flex-direction: column;
 }
 
 .campaign-card:hover {
@@ -152,7 +147,6 @@ nav a.active {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    flex: 1;
 }
 
 .category {
@@ -187,9 +181,8 @@ nav a.active {
 .btn-detail {
     border: 1px solid #2196F3;
     color: #2196F3;
-    margin-top: auto;
+    margin-top: 20px;
     margin-bottom: 0;
-    display: block;
 }
 
 .btn-donasi-quick {
