@@ -86,7 +86,7 @@ $gambar_src = file_exists('images/' . $kampanye['gambar'])
     <!-- ===== DETAIL KAMPANYE ===== -->
     <main class="container detail-container">
 
-        <!-- KOLOM KIRI -->
+        <!-- kolom kiri -->
         <section class="detail-left">
             <img
                 src="<?= htmlspecialchars($gambar_src) ?>"
@@ -102,14 +102,14 @@ $gambar_src = file_exists('images/' . $kampanye['gambar'])
             <p class="description"><?= nl2br(htmlspecialchars($kampanye['deskripsi'])) ?></p>
         </section>
 
-        <!-- KOLOM KANAN -->
+        <!-- kolom kanan -->
         <aside class="detail-right">
             <div class="donation-box">
 
-                <!-- KELOMPOK 1 -->
+                <!-- kelompok 1 -->
                 <h3 class="donation-title">Informasi Donasi</h3>
 
-                <!-- KELOMPOK 2 -->
+                <!-- kelompok 2 -->
                 <div class="donation-main">
                     <p>Target: <strong><?= formatRupiah($target) ?></strong></p>
                     <p>Terkumpul: <strong><?= formatRupiah($terkumpul) ?></strong></p>
@@ -123,13 +123,13 @@ $gambar_src = file_exists('images/' . $kampanye['gambar'])
                     <p class="deadline">Batas Waktu: <?= formatTanggal($kampanye['batas_waktu']) ?></p>
                 </div>
 
-                <!-- KELOMPOK 3 -->
+                <!-- kelompok 3 -->
                 <div class="donation-method">
                     <p><strong>Metode Donasi:</strong></p>
                     <p><?= nl2br(htmlspecialchars($kampanye['rekening_info'])) ?></p>
                 </div>
 
-                <!-- BUTTON -->
+                <!-- button -->
                 <div class="donation-action">
                     <a href="donasi.php?id=<?= $kampanye['id'] ?>" class="btn-donate">Donasi Sekarang</a>
                     <a href="index.php" class="btn-back">← Kembali ke Beranda</a>

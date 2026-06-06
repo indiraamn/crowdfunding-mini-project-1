@@ -159,7 +159,7 @@ $kampanye_list = array_slice($kampanye_all, $offset, $per_page);
             <?php endforeach; ?>
         </div>
 
-        <!-- PAGINATION -->
+        <!-- pagination -->
         <?php if ($total_pages > 1): ?>
         <div class="pagination">
             <?php

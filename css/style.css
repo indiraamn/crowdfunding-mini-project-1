@@ -29,7 +29,7 @@ header .container {
     align-items: center;
 }
 
-/* ===== HEADER ===== */ 
+/* header */
 header {
     background: #1976D2;
     padding: 15px 0;
@@ -41,7 +41,7 @@ header {
     color: white;
 }
 
-/* ===== NAVIGATION ===== */
+/* navigasi */
 nav {
     margin-left: auto;
 }
@@ -64,7 +64,7 @@ nav a.active {
     color: #90CAF9;
 }
 
-/* ===== SEARCH ===== */
+/* search */
 .search-section {
     background: #e3f2fd;
     padding: 40px 0;
@@ -111,7 +111,7 @@ nav a.active {
     font-weight: bold;
 }
 
-/* ===== CAMPAIGN / INDEX ===== */
+/* campaign / index */
 .section-title {
     margin: 30px 0;
     text-align: center;
@@ -190,7 +190,7 @@ nav a.active {
     color: white;
 }
 
-/* ===== DETAIL PAGE ===== */
+/* detail page */
 .detail-container {
     display: flex;
     gap: 30px;
@@ -250,7 +250,7 @@ nav a.active {
     gap: 20px;
 }
 
-/* KELOMPOK 1 */
+/* kelompok 1 */
 .donation-title {
     text-align: center;
     color: #1976D2;
@@ -258,7 +258,7 @@ nav a.active {
     font-weight: bold;
 }
 
-/* KELOMPOK 2 */
+/* kelompok 2 */
 .donation-main {
     display: flex;
     flex-direction: column;
@@ -270,14 +270,14 @@ nav a.active {
     color: #1976D2;
 }
 
-/* KELOMPOK 3 */
+/* kelompok 3 */
 .donation-method {
     background: #f5f9ff;
     padding: 10px;
     border-radius: 8px;
 }
 
-/* BUTTON AREA */
+/* button area */
 .donation-action {
     display: flex;
     flex-direction: column;
@@ -310,7 +310,7 @@ nav a.active {
     color: #1976D2;
 }
 
-/* ===== DONASI ===== */
+/* donasi */
 section {
     background-color: white;
     padding: 25px;
@@ -354,7 +354,7 @@ input, select, textarea {
 }
 
 
-/* ===== login dan daftar ===== */
+/* login dan daftar */
 .auth-page {
     background-color: #e3f2fd;
 }
@@ -431,12 +431,12 @@ input, select, textarea {
     margin-top: 15px;
 }
 
-/* muncul "sukses" setelah tombol diklik) */
+/* muncul "sukses" setelah tombol diklik */
 #sukses:target {
     display: block;
 }
 
-/* ===== FOOTER ===== */
+/* footer */
 footer {
     background: #1976D2;
     color: white;
@@ -445,7 +445,7 @@ footer {
     margin-top: auto;
 }
 
-/* ===== SAPAAN USER DI HEADER ===== */
+/* sapaan user di header */
 nav span {
     color: #FFD600;
     font-weight: bold;
@@ -543,7 +543,7 @@ nav span {
 .history-page footer {
     margin-top: auto;
 }
-/* ===== PAGINATION ===== */
+/* pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -574,7 +574,7 @@ nav span {
     border-color: #1976D2;
 }
 
-/* ===== RINGKASAN DONASI ===== */
+/* ringkasan donasi */
 .ringkasan-donasi {
     display: flex;
     gap: 15px;

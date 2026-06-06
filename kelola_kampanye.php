@@ -2,9 +2,7 @@
 session_start();
 require 'koneksi.php';
 
-// ============================================================
-// CEK LOGIN PENYELENGGARA
-// ============================================================
+// cek login penyelenggara
 if (!isset($_SESSION['penyelenggara_id'])) {
     header("Location: login.php");
     exit;
@@ -13,9 +11,7 @@ if (!isset($_SESSION['penyelenggara_id'])) {
 $penyelenggara_id = $_SESSION['penyelenggara_id'];
 $penyelenggara_nama = $_SESSION['penyelenggara_nama'];
 
-// ============================================================
-// HELPER FUNCTIONS
-// ============================================================
+// helper function
 function formatRupiah($angka) {
     return 'Rp ' . number_format($angka, 0, ',', '.');
 }
@@ -32,9 +28,7 @@ function formatTanggal($tanggal) {
 $pesan_sukses = "";
 $pesan_error  = "";
 
-// ============================================================
-// HANDLE: TAMBAH KAMPANYE
-// ============================================================
+// untuk tambah kampanye
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'tambah') {
     $judul       = trim($_POST['judul'] ?? '');
     $kategori    = trim($_POST['kategori'] ?? '');
@@ -76,9 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-// ============================================================
-// HANDLE: EDIT KAMPANYE
-// ============================================================
+// untuk edit kampanye
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'edit') {
     $kampanye_id = (int)$_POST['kampanye_id'];
     $judul       = trim($_POST['judul'] ?? '');
@@ -132,9 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-// ============================================================
-// HANDLE: HAPUS KAMPANYE
-// ============================================================
+// untuk hapus kampanye
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'hapus') {
     $kampanye_id = (int)$_POST['kampanye_id'];
 
@@ -161,9 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-// ============================================================
-// HANDLE: VERIFIKASI DONASI (terima / tolak)
-// ============================================================
+// verifikasi donasi : terima/tolak
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && in_array($_POST['action'], ['terima','tolak'])) {
     $donasi_id   = (int)$_POST['donasi_id'];
     $aksi        = $_POST['action'];
@@ -211,9 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && in_array
     }
 }
 
-// ============================================================
-// AMBIL DATA KAMPANYE MILIK PENYELENGGARA
-// ============================================================
+// ambil data kampanye untuk penyelenggara ini
 $stmt_k = $conn->prepare("
     SELECT * FROM kampanye WHERE penyelenggara_id = ? ORDER BY created_at DESC
 ");
@@ -226,9 +212,7 @@ while ($row = $result_k->fetch_assoc()) {
 }
 $stmt_k->close();
 
-// ============================================================
-// AMBIL SEMUA DONASI UNTUK KAMPANYE PENYELENGGARA INI
-// ============================================================
+// ambil data donasi untuk kampanye-kampanye penyelenggara ini
 $stmt_d = $conn->prepare("
     SELECT 
         d.id AS donasi_id,
@@ -313,23 +297,24 @@ $tab = $_GET['tab'] ?? 'kampanye';
             color: #fff;
         }
 
-        /* ===== PESAN ===== */
+        /* INI BAGIAN CSS - BERDIRI SENDIRI BIAR GA KEBANYAKAN BARIS HUHU */
+        /* pesan */
         .msg-sukses { background:#e6f9ee; border-left:4px solid #27ae60; color:#1a7a44; padding:12px 16px; border-radius:6px; margin-bottom:18px; }
         .msg-error  { background:#fdecea; border-left:4px solid #e53935; color:#b71c1c; padding:12px 16px; border-radius:6px; margin-bottom:18px; }
 
-        /* ===== TABEL ===== */
+        /* tabel */
         .tabel-kelola { width:100%; border-collapse:collapse; margin-bottom:28px; font-size:0.93rem; }
         .tabel-kelola th { background:#1976D2; color:#fff; padding:10px 12px; text-align:left; }
         .tabel-kelola td { padding:10px 12px; border-bottom:1px solid #e0e7ef; vertical-align:middle; }
         .tabel-kelola tr:hover td { background:#f5f8ff; }
 
-        /* ===== STATUS BADGE ===== */
+        /* status badge */
         .badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:0.8rem; font-weight:700; text-transform:uppercase; }
         .badge-verified  { background:#d4f8e5; color:#1a7a44; }
         .badge-pending   { background:#fff3cd; color:#856404; }
         .badge-rejected  { background:#fde8e8; color:#b71c1c; }
 
-        /* ===== TOMBOL ===== */
+        /* tombol */
         .btn { display:inline-block; padding:6px 14px; border-radius:5px; border:none; cursor:pointer; font-size:0.85rem; font-weight:600; text-decoration:none; transition:opacity .2s; }
         .btn:hover { opacity:0.85; }
         .btn-edit     { background:#f39c12; color:#fff; }
@@ -340,7 +325,7 @@ $tab = $_GET['tab'] ?? 'kampanye';
         .btn-secondary{ background:#888; color:#fff; }
         .btn-sm       { padding:4px 10px; font-size:0.8rem; }
 
-        /* ===== FORM KAMPANYE ===== */
+        /* form kampanye */
         .form-kampanye { background:#f8faff; border:1px solid #d0e4f7; border-radius:10px; padding:28px; margin-bottom:32px; }
         .form-kampanye h3 { margin-top:0; color:#1976D2; }
         .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
@@ -352,7 +337,7 @@ $tab = $_GET['tab'] ?? 'kampanye';
         .form-group-k textarea { resize:vertical; min-height:90px; }
         .form-actions { display:flex; gap:12px; margin-top:10px; }
 
-        /* ===== RINGKASAN DANA ===== */
+        /* ringkasan dana */
         .ringkasan-box { background:#fff; border:1px solid #d0e4f7; border-radius:8px; padding:14px 18px; margin-bottom:12px; }
         .ringkasan-box h4 { margin:0 0 8px; color:#1976D2; font-size:1rem; }
         .ringkasan-row { display:flex; gap:18px; flex-wrap:wrap; }
@@ -361,7 +346,7 @@ $tab = $_GET['tab'] ?? 'kampanye';
         .ri-pending  { color:#856404; }
         .ri-rejected { color:#b71c1c; }
 
-        /* ===== RESPONSIVE ===== */
+        /* responsive */
         @media (max-width:640px) {
             .form-row { grid-template-columns:1fr; }
             .tabel-kelola { font-size:0.8rem; }
@@ -405,9 +390,7 @@ $tab = $_GET['tab'] ?? 'kampanye';
         <a href="?tab=donasi"   class="<?= $tab === 'donasi'   ? 'active' : '' ?>">💰 Verifikasi Donasi</a>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- TAB: KAMPANYE SAYA                                          -->
-    <!-- ============================================================ -->
+    <!-- TAB : KAMPANYE SAYA -->
     <?php if ($tab === 'kampanye'): ?>
 
         <!-- FORM EDIT (jika ada ?edit=id) -->
@@ -518,9 +501,7 @@ $tab = $_GET['tab'] ?? 'kampanye';
         </table>
         <?php endif; ?>
 
-    <!-- ============================================================ -->
-    <!-- TAB: TAMBAH KAMPANYE                                        -->
-    <!-- ============================================================ -->
+    <!-- TAB : TAMBAH KAMPANYE -->
     <?php elseif ($tab === 'tambah'): ?>
 
         <div class="form-kampanye">
@@ -578,9 +559,7 @@ $tab = $_GET['tab'] ?? 'kampanye';
             </form>
         </div>
 
-    <!-- ============================================================ -->
-    <!-- TAB: VERIFIKASI DONASI                                      -->
-    <!-- ============================================================ -->
+    <!-- TAB : VERIFIKASI DONASI -->
     <?php elseif ($tab === 'donasi'): ?>
 
         <!-- RINGKASAN DANA PER KAMPANYE -->
