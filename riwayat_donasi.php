@@ -41,6 +41,16 @@ $riwayat = [];
 while ($row = $result->fetch_assoc()) {
     $riwayat[] = $row;
 }
+
+// Ringkasan per status
+$ringkasan = ['verified' => ['total' => 0, 'count' => 0], 'pending' => ['total' => 0, 'count' => 0], 'rejected' => ['total' => 0, 'count' => 0]];
+foreach ($riwayat as $r) {
+    $s = $r['status'];
+    if (isset($ringkasan[$s])) {
+        $ringkasan[$s]['total'] += $r['nominal'];
+        $ringkasan[$s]['count']++;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -70,6 +80,19 @@ while ($row = $result->fetch_assoc()) {
 
 <main class="container">
     <h2 class="section-title">Riwayat Donasi Saya</h2>
+
+    <!-- RINGKASAN -->
+    <div class="ringkasan-donasi">
+        <div class="ringkasan-item ri-verified">
+            ✅ Verified: <?= formatRupiah($ringkasan['verified']['total']) ?> (<?= $ringkasan['verified']['count'] ?> donasi)
+        </div>
+        <div class="ringkasan-item ri-pending">
+            ⏳ Pending: <?= formatRupiah($ringkasan['pending']['total']) ?> (<?= $ringkasan['pending']['count'] ?> donasi)
+        </div>
+        <div class="ringkasan-item ri-rejected">
+            ❌ Ditolak: <?= formatRupiah($ringkasan['rejected']['total']) ?> (<?= $ringkasan['rejected']['count'] ?> donasi)
+        </div>
+    </div>
 
     <?php if (count($riwayat) > 0): ?>
         <div class="table-wrapper">

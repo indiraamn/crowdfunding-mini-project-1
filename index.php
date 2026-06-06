@@ -51,12 +51,20 @@ if ($lokasi !== '') {
     $sql .= " AND k.lokasi LIKE '%$lok%'";
 }
 
-$sql .= " ORDER BY k.created_at DESC";
+$sql .= " ORDER BY k.batas_waktu ASC, k.dana_terkumpul ASC";
 $result = mysqli_query($conn, $sql);
-$kampanye_list = [];
+$kampanye_all = [];
 while ($row = mysqli_fetch_assoc($result)) {
-    $kampanye_list[] = $row;
+    $kampanye_all[] = $row;
 }
+
+// Pagination
+$per_page = 6;
+$total = count($kampanye_all);
+$total_pages = max(1, ceil($total / $per_page));
+$page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $total_pages)) : 1;
+$offset = ($page - 1) * $per_page;
+$kampanye_list = array_slice($kampanye_all, $offset, $per_page);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -150,6 +158,35 @@ while ($row = mysqli_fetch_assoc($result)) {
             </div>
             <?php endforeach; ?>
         </div>
+
+        <!-- PAGINATION -->
+        <?php if ($total_pages > 1): ?>
+        <div class="pagination">
+            <?php
+            $params = $_GET;
+            if ($page > 1):
+                $params['page'] = $page - 1;
+            ?>
+                <a href="?<?= http_build_query($params) ?>" class="page-btn">← Prev</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $total_pages; $i++):
+                $params['page'] = $i;
+            ?>
+                <a href="?<?= http_build_query($params) ?>"
+                   class="page-btn <?= $i === $page ? 'active' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($page < $total_pages):
+                $params['page'] = $page + 1;
+            ?>
+                <a href="?<?= http_build_query($params) ?>" class="page-btn">Next →</a>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
+
         <?php else: ?>
             <p style="text-align:center; padding: 40px 0; color: #888;">
                 Tidak ada kampanye yang ditemukan.
