@@ -74,7 +74,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <h1 class="logo">Bantu<span>Sesama</span></h1>
             <nav>
     <ul>
-        <li><a href="index.php">Beranda</a></li>
+        <li><a href="index.php" class="active">Beranda</a></li>
 
         <?php if (isset($_SESSION["donatur_id"])): ?>
              <li><a href="riwayat_donasi.php">Riwayat Donasi</a></li>

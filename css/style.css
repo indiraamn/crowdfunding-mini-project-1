@@ -9,6 +9,13 @@
 body {
     background-color: #f8fbff;
     color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
 }
 
 .container {
@@ -51,6 +58,13 @@ nav a {
     text-decoration: none;
     color: white;
     font-weight: bold;
+}
+
+nav a.active {
+    border: 2px solid #FFD600;
+    border-radius: 6px;
+    padding: 4px 10px;
+    color: #FFD600;
 }
 
 /* ===== SEARCH ===== */
@@ -120,6 +134,8 @@ nav a {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     overflow: hidden;
     transition: 0.2s;
+    display: flex;
+    flex-direction: column;
 }
 
 .campaign-card:hover {
@@ -136,6 +152,7 @@ nav a {
     padding: 15px;
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .category {
@@ -170,8 +187,9 @@ nav a {
 .btn-detail {
     border: 1px solid #2196F3;
     color: #2196F3;
-    margin-top: 20px;
+    margin-top: auto;
     margin-bottom: 0;
+    display: block;
 }
 
 .btn-donasi-quick {
@@ -431,7 +449,13 @@ footer {
     color: white;
     text-align: center;
     padding: 20px 0;
-    margin-top: 50px;
+    margin-top: auto;
+}
+
+/* ===== SAPAAN USER DI HEADER ===== */
+nav span {
+    color: #FFD600;
+    font-weight: bold;
 }
 
 .table-wrapper {
