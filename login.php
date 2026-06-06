@@ -5,29 +5,55 @@ require 'koneksi.php';
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST["email"];
+    $email    = $_POST["email"];
     $password = $_POST["password"];
+    $role     = $_POST["role"] ?? "donatur";
 
-    $stmt = $conn->prepare("SELECT id, nama, email, password FROM donatur WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    if ($role === "penyelenggara") {
+        // ---- LOGIN PENYELENGGARA ----
+        $stmt = $conn->prepare("SELECT id, nama_penyelenggara, email, password FROM penyelenggara WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
-
-        if (password_verify($password, $user["password"])) {
-            $_SESSION["donatur_id"] = $user["id"];
-            $_SESSION["donatur_nama"] = $user["nama"];
-            $_SESSION["donatur_email"] = $user["email"];
-
-            header("Location: index.php");
-            exit;
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user["password"])) {
+                $_SESSION["penyelenggara_id"]    = $user["id"];
+                $_SESSION["penyelenggara_nama"]  = $user["nama_penyelenggara"];
+                $_SESSION["penyelenggara_email"] = $user["email"];
+                $_SESSION["role"]                = "penyelenggara";
+                header("Location: kelola_kampanye.php");
+                exit;
+            } else {
+                $error = "Password salah.";
+            }
         } else {
-            $error = "Password salah.";
+            $error = "Email tidak ditemukan.";
         }
+
     } else {
-        $error = "Email tidak ditemukan.";
+        // ---- LOGIN DONATUR ----
+        $stmt = $conn->prepare("SELECT id, nama, email, password FROM donatur WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user["password"])) {
+                $_SESSION["donatur_id"]    = $user["id"];
+                $_SESSION["donatur_nama"]  = $user["nama"];
+                $_SESSION["donatur_email"] = $user["email"];
+                $_SESSION["role"]          = "donatur";
+                header("Location: index.php");
+                exit;
+            } else {
+                $error = "Password salah.";
+            }
+        } else {
+            $error = "Email tidak ditemukan.";
+        }
     }
 }
 ?>
@@ -76,9 +102,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  
                 <div class="form-group">
                     <label>Masuk sebagai</label>
-                    <select>
-                        <option>Donatur</option>
-                        <option>Pengelola Kampanye</option>
+                    <select name="role">
+                        <option value="donatur">Donatur</option>
+                        <option value="penyelenggara">Pengelola Kampanye</option>
                     </select>
                 </div>
  
