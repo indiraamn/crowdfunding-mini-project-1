@@ -90,6 +90,12 @@ $kampanye_list = array_slice($kampanye_all, $offset, $per_page);
                 <span>Halo, <?php echo htmlspecialchars($_SESSION["donatur_nama"]); ?></span>
             </li>
             <li><a href="logout.php">Logout</a></li>
+        <?php elseif (isset($_SESSION["penyelenggara_id"])): ?>
+            <li><a href="kelola_kampanye.php">Dashboard</a></li>
+            <li>
+                <span>Halo, <?php echo htmlspecialchars($_SESSION["penyelenggara_nama"]); ?></span>
+            </li>
+            <li><a href="logout.php">Logout</a></li>
         <?php else: ?>
             <li><a href="login.php">Login</a></li>
         <?php endif; ?>
