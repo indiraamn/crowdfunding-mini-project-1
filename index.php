@@ -3,10 +3,13 @@ session_start();
 require 'koneksi.php';
 ?>
 <?php
+
+// ubah angka jadi format rupiah
 function formatRupiah($angka) {
     return 'Rp ' . number_format($angka, 0, ',', '.');
 }
 
+// ubah tanggal dari format YYYY-MM-DD jadi "DD Bulan YYYY"
 function formatTanggal($tanggal) {
     $bulan = [
         '01'=>'Januari','02'=>'Februari','03'=>'Maret','04'=>'April',
@@ -17,7 +20,7 @@ function formatTanggal($tanggal) {
     return "$d {$bulan[$m]} $y";
 }
 
-// Ambil input search
+// Ambil input search dari url (get parameter) --> trim untuk menghapus spasi berlebih
 $keyword  = isset($_GET['keyword'])  ? trim($_GET['keyword'])  : '';
 $kategori = isset($_GET['kategori']) ? trim($_GET['kategori']) : '';
 $lokasi   = isset($_GET['lokasi'])   ? trim($_GET['lokasi'])   : '';
@@ -38,19 +41,22 @@ $sql = "
     WHERE k.batas_waktu >= '$today'
 ";
 
+// filter berdasarkan input search
 if ($keyword !== '') {
     $kw = mysqli_real_escape_string($conn, $keyword);
     $sql .= " AND (k.judul LIKE '%$kw%' OR k.deskripsi LIKE '%$kw%')";
 }
 if ($kategori !== '') {
+    //filter berdasarkan kategori yang dipilih dari dropdown
     $kat = mysqli_real_escape_string($conn, $kategori);
     $sql .= " AND k.kategori = '$kat'";
 }
 if ($lokasi !== '') {
+    // filter lokasi pake LIKE supaya bisa cari sebagian nama kota atau provinsi
     $lok = mysqli_real_escape_string($conn, $lokasi);
     $sql .= " AND k.lokasi LIKE '%$lok%'";
 }
-
+ // urut berdasarkan batas waktu terdekat, lalu dana terkumpul paling sedikit
 $sql .= " ORDER BY k.batas_waktu ASC, k.dana_terkumpul ASC";
 $result = mysqli_query($conn, $sql);
 $kampanye_all = [];
@@ -58,12 +64,14 @@ while ($row = mysqli_fetch_assoc($result)) {
     $kampanye_all[] = $row;
 }
 
-// Pagination
+// Pagination untuk menampilkan 6 kampanye per halaman
 $per_page = 6;
 $total = count($kampanye_all);
 $total_pages = max(1, ceil($total / $per_page));
 $page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $total_pages)) : 1;
 $offset = ($page - 1) * $per_page;
+
+// ambil hanya data untuk halaman yang aktif
 $kampanye_list = array_slice($kampanye_all, $offset, $per_page);
 ?>
 <!DOCTYPE html>
@@ -83,20 +91,25 @@ $kampanye_list = array_slice($kampanye_all, $offset, $per_page);
             <nav>
     <ul>
         <li><a href="index.php" class="active">Beranda</a></li>
-
+    <!-- Tampilkan menu berdasarkan role -->
         <?php if (isset($_SESSION["donatur_id"])): ?>
+
+            <!-- Jika login sebagai donatur: tampilkan riwayat donasi, nama, dan logout -->
              <li><a href="riwayat_donasi.php">Riwayat Donasi</a></li>
             <li>
                 <span>Halo, <?php echo htmlspecialchars($_SESSION["donatur_nama"]); ?></span>
             </li>
             <li><a href="logout.php">Logout</a></li>
         <?php elseif (isset($_SESSION["penyelenggara_id"])): ?>
+
+            <!-- Jika login sebagai penyelenggara: tampilkan link dashboard dan logout -->
             <li><a href="kelola_kampanye.php">Dashboard</a></li>
             <li>
                 <span>Halo, <?php echo htmlspecialchars($_SESSION["penyelenggara_nama"]); ?></span>
             </li>
             <li><a href="logout.php">Logout</a></li>
         <?php else: ?>
+             <!-- Jika belum login: tampilkan tombol Login -->
             <li><a href="login.php">Login</a></li>
         <?php endif; ?>
     </ul>
@@ -108,13 +121,19 @@ $kampanye_list = array_slice($kampanye_all, $offset, $per_page);
     <section class="search-section">
         <div class="container">
             <h2>Temukan Kampanye Donasi</h2>
+
+             <!-- Form GET supaya hasil pencarian bisa dibagikan via URL -->
             <form class="search-form" method="GET" action="index.php">
+
+                <!-- Input pencarian berdasarkan judul kampanye -->
                 <input
                     type="text"
                     name="keyword"
                     placeholder="Judul Kampanye"
                     value="<?= htmlspecialchars($keyword) ?>"
                 >
+
+                 <!-- Dropdown filter berdasarkan kategori (diambil dinamis dari DB) -->
                 <select name="kategori">
                     <option value="">Semua Kategori</option>
                     <?php foreach ($daftar_kategori as $kat): ?>
@@ -124,6 +143,8 @@ $kampanye_list = array_slice($kampanye_all, $offset, $per_page);
                         </option>
                     <?php endforeach; ?>
                 </select>
+
+                <!-- Input pencarian berdasarkan lokasi -->
                 <input
                     type="text"
                     name="lokasi"
@@ -142,11 +163,16 @@ $kampanye_list = array_slice($kampanye_all, $offset, $per_page);
         <?php if (count($kampanye_list) > 0): ?>
         <div class="campaign-grid">
             <?php foreach ($kampanye_list as $k):
+                // Hitung persentase dana terkumpul untuk progress bar
                 $target    = (float)$k['target_dana'];
                 $terkumpul = (float)$k['dana_terkumpul'];
+                // min(100, ...) supaya persentase tidak melebihi 100%
                 $persen    = ($target > 0) ? min(100, round(($terkumpul / $target) * 100)) : 0;
             ?>
+
+            <!-- Card kampanye - klik "Lihat Detail" untuk ke halaman detail -->
             <div class="campaign-card">
+                 <!-- Gambar dari folder images/, fallback ke gambar default jika error -->
                 <img
                     src="images/<?= htmlspecialchars($k['gambar']) ?>"
                     alt="<?= htmlspecialchars($k['judul']) ?>"
@@ -159,23 +185,29 @@ $kampanye_list = array_slice($kampanye_all, $offset, $per_page);
                     <p>Target: <strong><?= formatRupiah($target) ?></strong></p>
                     <p>Terkumpul: <strong><?= formatRupiah($terkumpul) ?></strong></p>
                     <p class="deadline">Batas Waktu: <?= formatTanggal($k['batas_waktu']) ?></p>
+                    
+                     <!-- Link ke halaman detail dengan id kampanye sebagai parameter -->
                     <a href="detail.php?id=<?= $k['id'] ?>" class="btn-detail">Lihat Detail</a>
                 </div>
             </div>
             <?php endforeach; ?>
         </div>
 
-        <!-- pagination -->
+        <!-- PAGINATION -->
         <?php if ($total_pages > 1): ?>
         <div class="pagination">
             <?php
+            // Pertahankan parameter search saat ganti halaman
             $params = $_GET;
+
+            // Tombol Prev (hanya tampil jika bukan halaman pertama)
             if ($page > 1):
                 $params['page'] = $page - 1;
             ?>
                 <a href="?<?= http_build_query($params) ?>" class="page-btn">← Prev</a>
             <?php endif; ?>
-
+            
+            <!-- Nomor halaman -->
             <?php for ($i = 1; $i <= $total_pages; $i++):
                 $params['page'] = $i;
             ?>
@@ -185,6 +217,7 @@ $kampanye_list = array_slice($kampanye_all, $offset, $per_page);
                 </a>
             <?php endfor; ?>
 
+             <!-- Tombol Next (hanya tampil jika bukan halaman terakhir) -->
             <?php if ($page < $total_pages):
                 $params['page'] = $page + 1;
             ?>
@@ -194,6 +227,7 @@ $kampanye_list = array_slice($kampanye_all, $offset, $per_page);
         <?php endif; ?>
 
         <?php else: ?>
+             <!-- Pesan jika tidak ada kampanye yang ditemukan -->
             <p style="text-align:center; padding: 40px 0; color: #888;">
                 Tidak ada kampanye yang ditemukan.
             </p>

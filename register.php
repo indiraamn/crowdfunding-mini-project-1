@@ -4,13 +4,16 @@ require 'koneksi.php';
 
 $error = "";
 $success = "";
-
+// proses form hanya jika request method POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+// ambil dan bersihkan input dari form
     $nama = trim($_POST["nama"]);
     $email = trim($_POST["email"]);
     $no_telepon = trim($_POST["no_telepon"]);
     $password = $_POST["password"];
 
+    // validasi : pw minimal 8 karakter
     if (strlen($password) < 8) {
         $error = "Password minimal 8 karakter.";
     } else {
@@ -20,12 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cek->execute();
         $result = $cek->get_result();
 
+        // email sudah terdaftar, tolak pendaftaran
         if ($result->num_rows > 0) {
             $error = "Email sudah terdaftar.";
         } else {
             // Password harus di-hash supaya cocok dengan password_verify di login.php
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
+            // simpan data donatur ke database
             $stmt = $conn->prepare("INSERT INTO donatur (nama, email, no_telepon, password, created_at) VALUES (?, ?, ?, ?, NOW())");
             $stmt->bind_param("ssss", $nama, $email, $no_telepon, $password_hash);
 
@@ -66,10 +71,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <section class="auth-box">
             <h2>Daftar Akun</h2>
             <p>Lengkapi data untuk membuat akun baru</p>
+
+            <!-- tampilkan pesan error jika validasi gagal -->
             <?php if ($error != ""): ?>
                 <p style="color:red; text-align:center;"><?php echo $error; ?></p>
             <?php endif; ?>
-
+            
+            <!-- tampilkan pesan sukses jika pendaftaran berhasil -->
             <?php if ($success != ""): ?>
                 <p style="color:green; text-align:center;"><?php echo $success; ?></p>
             <?php endif; ?>
@@ -92,6 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  
                 <div class="form-group">
                     <label>Password Baru</label>
+                    <!-- pw minimal 8 karakter -->
                     <input type="password" name="password" placeholder="Minimal 8 karakter" required>
                 </div>
  
