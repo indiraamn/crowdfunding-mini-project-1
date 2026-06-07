@@ -102,7 +102,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  
                 <div class="form-group">
                     <label>Masuk sebagai</label>
-                    <select name="role">
+                    <select name="role" required>
+                        <option value="" disabled selected>-- Pilih Role --</option>
                         <option value="donatur">Donatur</option>
                         <option value="penyelenggara">Pengelola Kampanye</option>
                     </select>
